@@ -1380,7 +1380,8 @@
           };
           static encryptAes = (t, e) => {
             let r = this.#t(e);
-            if (t.length > 16) return 'Error: Text data too large';
+            if (t.length / 2 > 16)
+              return 'Error: Text data too large';
             let i = n.utils.utf8.toBytes(t),
               s = new n.ModeOfOperation.ecb(r).encrypt(i);
             return n.utils.hex.fromBytes(s);
