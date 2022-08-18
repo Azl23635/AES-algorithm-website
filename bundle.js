@@ -1374,8 +1374,7 @@
           static #t = (t) => {
             const e = [];
             for (let r = 0; r < t.length; r++)
-              r % 2 &&
-                e.push(parseInt(t[r - 1], 16) + parseInt(t[r], 16));
+              e.push(parseInt(t[r - 1], 16) + parseInt(t[r], 16));
             return e;
           };
           static encryptAes = (t, e) => {
