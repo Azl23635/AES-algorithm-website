@@ -914,7 +914,7 @@
               1806599355, 1654886325, 1568718495, 1418573201,
               1335535747, 1184342925,
             ];
-          function I(t) {
+          function k(t) {
             for (var e = [], r = 0; r < t.length; r += 4)
               e.push(
                 (t[r] << 24) |
@@ -924,13 +924,13 @@
               );
             return e;
           }
-          var k = function (t) {
-            if (!(this instanceof k))
+          var z = function (t) {
+            if (!(this instanceof z))
               throw Error('AES must be instanitated with `new`');
             Object.defineProperty(this, 'key', { value: i(t, !0) }),
               this._prepare();
           };
-          (k.prototype._prepare = function () {
+          (z.prototype._prepare = function () {
             var t = c[this.key.length];
             if (null == t)
               throw new Error(
@@ -943,7 +943,7 @@
             var r,
               n = 4 * (t + 1),
               i = this.key.length / 4,
-              s = I(this.key);
+              s = k(this.key);
             for (e = 0; e < i; e++)
               (r = e >> 2),
                 (this._Ke[r][e % 4] = s[e]),
@@ -992,7 +992,7 @@
                     C[(o >> 8) & 255] ^
                     S[255 & o]);
           }),
-            (k.prototype.encrypt = function (t) {
+            (z.prototype.encrypt = function (t) {
               if (16 != t.length)
                 throw new Error(
                   'invalid plaintext size (must be 16 bytes)'
@@ -1000,7 +1000,7 @@
               for (
                 var e = this._Ke.length - 1,
                   r = [0, 0, 0, 0],
-                  n = I(t),
+                  n = k(t),
                   i = 0;
                 i < 4;
                 i++
@@ -1032,7 +1032,7 @@
                     255 & (f[255 & n[(i + 3) % 4]] ^ h));
               return a;
             }),
-            (k.prototype.decrypt = function (t) {
+            (z.prototype.decrypt = function (t) {
               if (16 != t.length)
                 throw new Error(
                   'invalid ciphertext size (must be 16 bytes)'
@@ -1040,7 +1040,7 @@
               for (
                 var e = this._Kd.length - 1,
                   r = [0, 0, 0, 0],
-                  n = I(t),
+                  n = k(t),
                   i = 0;
                 i < 4;
                 i++
@@ -1072,14 +1072,14 @@
                     255 & (p[255 & n[(i + 1) % 4]] ^ h));
               return a;
             });
-          var z = function (t) {
-            if (!(this instanceof z))
+          var I = function (t) {
+            if (!(this instanceof I))
               throw Error('AES must be instanitated with `new`');
             (this.description = 'Electronic Code Block'),
               (this.name = 'ecb'),
-              (this._aes = new k(t));
+              (this._aes = new z(t));
           };
-          (z.prototype.encrypt = function (t) {
+          (I.prototype.encrypt = function (t) {
             if ((t = i(t)).length % 16 != 0)
               throw new Error(
                 'invalid plaintext size (must be multiple of 16 bytes)'
@@ -1093,7 +1093,7 @@
                 o((r = this._aes.encrypt(r)), e, n);
             return e;
           }),
-            (z.prototype.decrypt = function (t) {
+            (I.prototype.decrypt = function (t) {
               if ((t = i(t)).length % 16 != 0)
                 throw new Error(
                   'invalid ciphertext size (must be multiple of 16 bytes)'
@@ -1121,7 +1121,7 @@
                 );
             } else e = s(16);
             (this._lastCipherblock = i(e, !0)),
-              (this._aes = new k(t));
+              (this._aes = new z(t));
           };
           (A.prototype.encrypt = function (t) {
             if ((t = i(t)).length % 16 != 0)
@@ -1174,7 +1174,7 @@
             r || (r = 1),
               (this.segmentSize = r),
               (this._shiftRegister = i(e, !0)),
-              (this._aes = new k(t));
+              (this._aes = new z(t));
           };
           (B.prototype.encrypt = function (t) {
             if (t.length % this.segmentSize != 0)
@@ -1249,7 +1249,7 @@
             } else e = s(16);
             (this._lastPrecipher = i(e, !0)),
               (this._lastPrecipherIndex = 16),
-              (this._aes = new k(t));
+              (this._aes = new z(t));
           };
           (K.prototype.encrypt = function (t) {
             for (var e = i(t, !0), r = 0; r < e.length; r++)
@@ -1306,7 +1306,7 @@
               (this._counter = e),
               (this._remainingCounter = null),
               (this._remainingCounterIndex = 16),
-              (this._aes = new k(t));
+              (this._aes = new z(t));
           };
           (P.prototype.encrypt = function (t) {
             for (var e = i(t, !0), r = 0; r < e.length; r++)
@@ -1324,10 +1324,10 @@
           }),
             (P.prototype.decrypt = P.prototype.encrypt);
           var T = {
-            AES: k,
+            AES: z,
             Counter: M,
             ModeOfOperation: {
-              ecb: z,
+              ecb: I,
               cbc: A,
               cfb: B,
               ofb: K,
@@ -1374,7 +1374,7 @@
           static #t = (t) => {
             const e = [];
             for (let r = 0; r < t.length; r++)
-              e.push(parseInt(t[r - 1], 16) + parseInt(t[r], 16));
+              e.push(parseInt(t[r], 16));
             return e;
           };
           static encryptAes = (t, e) => {
